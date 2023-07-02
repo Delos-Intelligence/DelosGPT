@@ -1,5 +1,4 @@
 openai
 tiktoken
 langchain
-langchain.document_loaders.unstructured
 llama-index==0.6.38

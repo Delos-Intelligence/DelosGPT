@@ -2,3 +2,4 @@ openai
 tiktoken
 langchain==0.0.221
 llama-index==0.6.38
+unstructured

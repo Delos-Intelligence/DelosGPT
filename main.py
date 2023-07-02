@@ -5,7 +5,7 @@ import tempfile
 import tiktoken
 from llama_index import SimpleDirectoryReader, GPTVectorStoreIndex
 
-from langchain.document_loaders import UnstructuredFileLoader
+from langchain.document_loaders import UnstructuredPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import LLMChain
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -47,7 +47,7 @@ if uploaded_file is not None:
         tmpfile.write(uploaded_file.getvalue())
         tmpfile_path = tmpfile.name
 
-    loader = UnstructuredFileLoader(tmpfile_path)
+    loader = UnstructuredPDFLoader(tmpfile_path)
     documents = loader.load()
     texts = text_splitter.split_documents(documents)
     docsearch = FAISS.from_documents(texts, embeddings)

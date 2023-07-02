@@ -1,1 +1,5 @@
 openai
+tiktoken
+langchain
+llama-index
+tempfile

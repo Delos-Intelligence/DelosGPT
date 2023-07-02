@@ -19,8 +19,7 @@ def compute_number_of_tokens(string: str, encoding_name: str = "gpt2") -> int:
     num_tokens = len(encoding.encode(string))
     return num_tokens
 
-os.environ['OPENAI_API_KEY'] = "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"
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 
 prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 

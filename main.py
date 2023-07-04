@@ -5,7 +5,7 @@ import tempfile
 import tiktoken
 from llama_index import SimpleDirectoryReader, GPTVectorStoreIndex
 
-from langchain.document_loaders import UnstructuredPDFLoader
+from langchain.document_loaders import UnstructuredFileLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import LLMChain
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -29,25 +29,28 @@ Question: {question}
 Answer in French:"""
 
 PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-llm = ChatOpenAI(model_name='gpt-3.5-turbo')
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50,length_function = compute_number_of_tokens)
+llm = ChatOpenAI(model_name='gpt-3.5-turbo-16k')
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200,length_function = compute_number_of_tokens)
 chain = LLMChain(llm=llm, prompt=PROMPT, verbose=True)
 embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
 def get_answer(question, docsearch):
     docs = docsearch.similarity_search(question, k=5)
+    st.write(docs)
     resp = chain.run({"context": docs, "question": question})
     return resp
+
 st.title("chatbot NUKEMA 😊")
 uploaded_file = st.file_uploader("Drag and drop un fichier PDF", type=["pdf"])
 question = st.text_input("Posez votre question ici")
 
 if uploaded_file is not None:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmpfile:
-        tmpfile.write(uploaded_file.getvalue())
+    suffix = "." + uploaded_file.type.split("/")[-1] 
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmpfile:
+        tmpfile.write(uploaded_file.read())
         tmpfile_path = tmpfile.name
 
-    loader = UnstructuredPDFLoader(tmpfile_path)
+    loader = UnstructuredFileLoader(tmpfile_path)
     documents = loader.load()
     texts = text_splitter.split_documents(documents)
     docsearch = FAISS.from_documents(texts, embeddings)

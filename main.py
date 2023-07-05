@@ -40,7 +40,7 @@ def get_answer(question, docsearch):
     resp = chain.run({"context": docs, "question": question})
     return resp
 
-st.title("chatbot NUKEMA 😊")
+st.title("chatbot NUKEMA")
 uploaded_file = st.file_uploader("Drag and drop un fichier PDF", type=["pdf"])
 question = st.text_input("Posez votre question ici")
 

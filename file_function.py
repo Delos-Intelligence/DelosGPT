@@ -29,7 +29,6 @@ def create_temp_files_from_strings(strings):
         with tempfile.NamedTemporaryFile(delete=False) as tmpfile:
             tmpfile.write(string.encode())
             temp_file_paths.append(tmpfile.name)
-    print(temp_file_paths)
     return temp_file_paths
 
 def compute_number_of_tokens(string: str, encoding_name: str = "gpt2") -> int:

@@ -15,13 +15,15 @@ import file_function as ffunc
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 
 
-prompt_template = """Use the following pieces of context to answer the question at the end. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
+prompt_template = """Voici des extraits d'un CCTP dans le cadre d'un appel d'offres. 
+Utilise ces extraits pour répondre à la question qui t'es donnée. 
+Fournis des réponses détaillées en les expliquant et en listant le plus d'informations possibles. 
+Si les éléments ne suffisent pas ou que tu n'as pas la réponse, dis que tu ne sais pas répondre. N'essaie pas de créer une fausse réponse. 
 
 {context}
 
 Question: {question}
-Answer in Italian:"""
+Answer in French:"""
 
 
 def load_model():
@@ -33,7 +35,7 @@ def load_model():
     return llm, embeddings, prompt
 
 def load_retrieval(llm, docsearch, prompt):
-    qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=docsearch.as_retriever(), return_source_documents = True, chain_type_kwargs={"prompt":prompt})
+    qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=docsearch.as_retriever(), return_source_documents = True, chain_type_kwargs={"prompt":prompt}, verbose = True)
     return qa
 
 def create_vector_database(pdffile, embed_model):

@@ -10,8 +10,13 @@ def get_answer(question, docsearch):
     result = qa({"query": question})
     return result
 
-st.title("Chatbot NUKEMA")
-uploaded_file = st.file_uploader("Drag and drop un fichier PDF", type=["pdf"])
+col1, col2, col3 = st.columns([1,6,1])
+
+with col1:
+    st.image("Delos.png", width=150)
+
+st.title("Delos-GPT")
+uploaded_file = st.file_uploader("Déposez un fichier PDF", type=["pdf"])
 question = st.text_input("Posez votre question ici")
 
 if uploaded_file is not None:

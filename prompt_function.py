@@ -15,8 +15,8 @@ import file_function as ffunc
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 
 
-prompt_template = """Voici des extraits d'un CCTP dans le cadre d'un appel d'offres. 
-Utilise ces extraits pour répondre à la question qui t'es donnée. 
+prompt_template = """Voici des extraits d'un document qu'un utilisateur a renseigné sur la plateforme. 
+Utilise ces extraits pour répondre à la question qui t'es posée. 
 Fournis des réponses détaillées en les expliquant et en listant le plus d'informations possibles. 
 Si les éléments ne suffisent pas ou que tu n'as pas la réponse, dis que tu ne sais pas répondre. N'essaie pas de créer une fausse réponse. 
 

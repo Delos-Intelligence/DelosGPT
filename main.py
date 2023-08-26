@@ -26,5 +26,5 @@ if question and uploaded_file is not None:
     result = get_answer(question, docsearch)
     print(result['source_documents'])
     print(str(len(result['source_documents'])))
-    st.write(str(result['result']) + ' Pour plus d\'informations, consulter la page '+str(result['source_documents'][0].metadata['page']))
+    st.write(str(result['result']))
 
